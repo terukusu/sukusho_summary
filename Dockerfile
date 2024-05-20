@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y -f \
     && rm -rf /var/lib/apt/lists/*
 
 # ChromeDriverの適切なバージョンを取得してインストール
-# https://googlechromelabs.github.io/chrome-for-testing/#stable から ↑でインストールされる Chrome のバージョンに合ったものを選ぶ
+# https://googlechromelabs.github.io/chrome-for-testing/#stable から ↑でインストールされる 「chrome」 のバージョンに合った「chromedriver」を選ぶ
 RUN wget -q "https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.60/linux64/chromedriver-linux64.zip" \
     && unzip chromedriver-linux64.zip \
     && mv chromedriver-linux64/chromedriver /usr/bin/chromedriver \
