@@ -35,7 +35,7 @@ def index():
     except Exception as e:
         logging.exception(e)
     finally:
-        # Push型サブスクリプションの再送抑止のために200を返す
+        # Pub/SubでのPush型サブスクリプションの場合の再送を抑止するために200を返す
         return 'OK', 200
 
 
