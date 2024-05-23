@@ -107,6 +107,18 @@ class SukushoSummary:
     def __init__(self, url: str, *, prompt: str = _DEFAULT_PROMPT,
                  finder: BaseFinder = None, ocr_mode: bool = False, window_size: tuple[int, int] = _DEFAULT_WINDOW_SIZE,
                  zoom: float = _DEFAULT_ZOOM, device_emulation: str = None):
+        """
+        SukushoSummaryクラスのコンストラクタ。
+
+        Args:
+            url (str): スクリーンショットを撮るウェブサイトのURL。
+            prompt (str, optional): AIモデルに送信するプロンプト。デフォルトは _DEFAULT_PROMPT。
+            finder (BaseFinder, optional): 特定の要素を見つけるためのファインダークラス。デフォルトは None。
+            ocr_mode (bool, optional): OCRモードを使用するかどうか。デフォルトは False。
+            window_size (tuple[int, int], optional): ウィンドウサイズ（幅、高さ）。デフォルトは _DEFAULT_WINDOW_SIZE。
+            zoom (float, optional): ウェブページのズームレベル。デフォルトは _DEFAULT_ZOOM。
+            device_emulation (str, optional): デバイスエミュレーションの名前。各種スマホやタブレットなど、Chromeが偽装できるデバイスなら何でも指定可能。デフォルトは None。
+        """
         self.url = url
         self.prompt = prompt
         self.finder = finder
@@ -283,6 +295,18 @@ def get_openai_client() -> OpenAI:
 
 
 def openai_chat(prompt: str, *args, images: list[(str, bytes)] = None):
+    """
+    OpenAI APIを使用してテキスト生成を行う関数。
+
+    Args:
+        prompt (str): ユーザーからのプロンプト。
+        *args: その他の引数（現在使用されていない）。
+        images (list[(str, bytes)], optional): MIMEタイプと画像のバイナリデータのタプルからなるリスト。
+
+    Returns:
+        str: OpenAI APIからの生成されたテキスト。
+    """
+
     client = get_openai_client()
 
     messages = [

@@ -40,7 +40,6 @@ def index():
 
 
 def main():
-    print('OK')
     url = _TARGET_URL
     element = _TARGET_ELEMENT
 
@@ -49,11 +48,11 @@ def main():
 
     # サイトの内容に合わせて、スクショを取りたいエリアをよしなに設定する
 
-    # 撮影エリアを細かく指定したい場合は、margin_top, margin_bottom, margin_left, margin_rightを指定する
-    # f = sukusho_summary.StringFinder(element, margin_top=1, margin_bottom=120, margin_left=1, margin_right=1)
+    # 目的の要素が表示されていさえすれば判定できる場合は、マージン等の細かい撮影領域の指定は不要
+    # f = sukusho_summary.StringFinder(element)
 
-    # 目的の要素が表示されていさえすれば判定できる場合は、マージンの指定は不要
-    f = sukusho_summary.StringFinder(element)
+    # 撮影領域を細かく指定したい場合は、margin_top, margin_bottom, margin_left, margin_rightを指定する
+    f = sukusho_summary.StringFinder(element, margin_top=1, margin_bottom=120, margin_left=20, margin_right=20)
 
     s = sukusho_summary.SukushoSummary(url, prompt=prompt, finder=f)
     summary = s.browse_site()
