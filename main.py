@@ -9,8 +9,15 @@ from flask import Flask
 
 import sukusho_summary
 
-_TARGET_URL = '＜監視したいECサイトのURLに差し替え＞'
-_TARGET_PRODUCT = '＜監視したい商品の名前など、ページ内の監視したい領域を特定するための文字列に差し替え＞'
+# 監視したいECサイトのURL
+_TARGET_URL = 'https://github.com/terukusu/sukusho_summary/wiki/Sample-EC-Page'
+
+# 監視したい商品の名前など、ページ内の監視したい領域を特定するための文字列。
+# サンプルでは「購入」という項目に購入ボタンが配置されているのでその近辺をの領域を監視する。
+_TARGET_ELEMENT = '購入'
+
+# 商品名。通知メッセージに表示される。
+_TARGET_PRODUCT = 'スーパーツレルンダー'
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,22 +42,27 @@ def index():
 def main():
     print('OK')
     url = _TARGET_URL
-    product = _TARGET_PRODUCT
+    element = _TARGET_ELEMENT
 
     # サイトの内容に合わせてよしなにプロンプトを書く
     prompt = "在庫は有りますか？「かごへ入れる」は在庫ありと言う意味です。「在庫なし」は在庫なしという意味です。ただ一言、yes か no で答えてください。"
 
     # サイトの内容に合わせて、スクショを取りたいエリアをよしなに設定する
-    f = sukusho_summary.StringFinder(product, margin_top=1, margin_bottom=120, margin_left=100, margin_right=450)
+
+    # 撮影エリアを細かく指定したい場合は、margin_top, margin_bottom, margin_left, margin_rightを指定する
+    # f = sukusho_summary.StringFinder(element, margin_top=1, margin_bottom=120, margin_left=1, margin_right=1)
+
+    # 目的の要素が表示されていさえすれば判定できる場合は、マージンの指定は不要
+    f = sukusho_summary.StringFinder(element)
 
     s = sukusho_summary.SukushoSummary(url, prompt=prompt, finder=f)
     summary = s.browse_site()
 
     logging.debug(f'summary: {summary}')
 
-    message = f'在庫があります！🙌🎉: {_TARGET_PRODUCT}'
+    message = f'在庫があります！！ヽ(=´▽`=)ﾉ: {_TARGET_PRODUCT}'
     if 'YES' != summary.upper().strip():
-        message = f'在庫がありません😢: {_TARGET_PRODUCT}'
+        message = f'在庫がありません(T_T): {_TARGET_PRODUCT}'
 
     # 結果を通知(例: LINE通知など)
     send_notification(message)

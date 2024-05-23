@@ -100,7 +100,7 @@ class ElementNotFoundError(Exception):
 
 class SukushoSummary:
     """
-    Manages the process of browsing a website, taking a screenshot, and sending the data to an AI model.
+    ウェブサイトをブラウズし、スクリーンショットを撮り、そのデータをAIモデルに送信するプロセスを管理するクラスです。
     """
     listener: Optional[Callable[[str], None]] = None
 
@@ -126,7 +126,7 @@ class SukushoSummary:
         if self.listener is not None:
             self.listener(message)
         else:
-            print("Listener is not set or message is not a string")
+            logging.debug("Listener is not set or message is not a string")
 
     def browse_site(self) -> str:
         screenshot_path = None
