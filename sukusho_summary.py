@@ -25,12 +25,24 @@ _DEFAULT_ZOOM = 1.0
 
 class BaseFinder(ABC):
     """
-    Represents a screenshot capture area.
-    Margins are relative to the top-left coordinates of the found element.
+    スクリーンショットキャプチャ領域を表します。
+    マージンは、見つけた要素の左上座標に対して相対的です。
     """
 
     def __init__(self, *, margin_top: int = 0, margin_left: int = 0,
                  margin_right: int = 0, margin_bottom: int = 0):
+        """
+        BaseFinderクラスのコンストラクタ。
+
+        Args:
+            margin_top (int, optional): 要素の上側のマージン。デフォルトは0。
+            margin_left (int, optional): 要素の左側のマージン。デフォルトは0。
+            margin_right (int, optional): 要素の右側のマージン。デフォルトは0。
+            margin_bottom (int, optional): 要素の下側のマージン。デフォルトは0。
+
+        Raises:
+            ValueError: マージンが負の値の場合に発生。
+        """
 
         if any(margin < 0 for margin in [margin_top, margin_left, margin_right, margin_bottom]):
             raise ValueError('Margins must be non-negative')
